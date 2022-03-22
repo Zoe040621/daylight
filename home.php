@@ -35,9 +35,6 @@ for ($x = 0; $x <= count($post_user)-1; $x++) {
             
             echo "<div>";
             echo '<img src="data:image/jpeg;base64,' . base64_encode($photo[0]) . '" style="width:350;height:auto"/>' . "<br>";
-            echo "<a href='likeUser.php?pid=$pid&c=0'>
-            <img src='https://static.thenounproject.com/png/1939909-200.png' style='height:18.5;width:auto;'>
-            </a>";
             $haveMatch = 0;
             $sql = $conn->prepare("SELECT * FROM `like` WHERE postID = '$pid'");
             $sql->execute();
@@ -62,8 +59,11 @@ for ($x = 0; $x <= count($post_user)-1; $x++) {
             echo "
             <a href='commentHandler.php?pid=$pid&c=0'>
             <img src='http://cdn.onlinewebfonts.com/svg/img_420387.png' style='width:20;height:auto'>
-            </a>
-            <br>";
+            </a>";
+            echo "<a href='likeUser.php?pid=$pid&c=0'>
+            <img src='https://static.thenounproject.com/png/1939909-200.png' style='height:18.5;width:auto;'>
+            </a>";
+            echo "<br>";
 
             echo "<u class=\"uname\">" . $uname . " " . "</u>";
             echo $text[0] . "<br>";

@@ -50,6 +50,7 @@ a {
 a.follow {
     padding-top: 2px;
     padding-bottom: 2px;
+    padding-left: 0px;
 }
 
 div.comment {
