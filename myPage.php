@@ -1,25 +1,25 @@
 <?php
+    // nav and conn
     require("nav.php");
     require("conn.php");
 
     session_start();
     $uid = $_SESSION['id'];
-    $user = $_SESSION['username'];
-    $mail = $_SESSION['email'];
+    $uname = $_SESSION['username'];
 
-    $sql = $conn->prepare("SELECT * FROM `user` WHERE name LIKE '$user'");
+    // get user info
+    $sql = $conn->prepare("SELECT * FROM `user` WHERE name LIKE '$uname'");
     $sql->execute();
     $rst = $sql -> fetchAll();
-
     $pic = array_column($rst, "profilePic");
     $bio = array_column($rst, "bio");
 
+    // display user info
     require("follow_query.php");
-
     echo "<div class='profile'>";
     echo '<img src="data:image/jpeg;base64,' . base64_encode($pic[0]) . '" style="width:100;height:auto"/>' . "<br><br>";
-    echo "<u class='uname'>" . $user . "</u><br>";
-    echo "<u class='bio'>" . $bio[0] . "</u><br><br>";
+    echo "<u class='uname'>" . $uname . "</u><br>";
+    echo "<u class='gray'>" . $bio[0] . "</u><br><br>";
     $x = count($follower);
     echo "<a href=\"follow.php?name=follower\" style=\"padding-top: 2px; padding-down:2px\">$x Followers</a><br>";
     $x = count($following);
@@ -41,19 +41,16 @@
     echo "<a href='liked.php'>Liked Posts</a>";
     require("conn.php");
 
-    session_start();
-    $uid = $_SESSION['id'];
-    $uname = $_SESSION['username'];
-
+    // get info of posts posted by the user
     $sql = $conn->prepare("SELECT * FROM post WHERE userID = $uid ORDER BY postTime DESC");
     $sql->execute();
     $rst = $sql -> fetchAll();
-
     $pid = array_column($rst, "postID");
     $photo = array_column($rst, "pic");
     $text = array_column($rst, "content");
     $time = array_column($rst, "postTime");
 
+    // display post info + like icon + comment icon + liked user icon
     for($x = 0; $x <= count($pid)-1; $x++) {
         echo "<div>";
         echo '<img src="data:image/jpeg;base64,'.base64_encode($photo[$x]).'" style="width:350;height:auto"/>' . "<br>";
@@ -88,7 +85,7 @@
         echo "<br>";
         echo "<u class=\"uname\">" . $uname . " " . "</u>";
         echo $text[$x] . "<br>";
-        echo $time[$x];
+        echo "<u class=\"gray\">" . $time[$x] . "</u>";
         echo "</div>";
         echo "<br>";
     }

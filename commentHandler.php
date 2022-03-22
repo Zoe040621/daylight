@@ -38,9 +38,10 @@ require("certain_post.php");
 $sql = $conn->prepare("SELECT * FROM `user` WHERE userID = '$uid'");
 $sql->execute();
 $rst = $sql->fetchAll();
-
 $photo = array_column($rst, "profilePic");
 $name = array_column($rst, "name");
+
+// profilePic of the commenting user + commenting box + submit button
 echo "<div class=\"comment\">";
 echo '<img src="data:image/jpeg;base64,' . base64_encode($photo[0]) . '" style="width:50;height:auto;float:left"/>' . "<br>";
 echo "
@@ -53,6 +54,7 @@ echo "
 ";
 echo "</div>";
 
+// display comment for the post
 $sql = $conn->prepare("SELECT * FROM comment WHERE postID = '$pid' ORDER BY commentTime DESC");
 $sql->execute();
 $rst = $sql->fetchAll();
@@ -73,20 +75,15 @@ for ($x = 0; $x <= count($commentID) - 1; $x++) {
     echo '<img src="data:image/jpeg;base64,' . base64_encode($photo[0]) . '" style="width:50;height:auto;float:left;margin-right:10px"/>' . "<br>";
     echo "<u class=\"uname\">" . $uname[0] . " " . "</u>";
     echo $comment[$x] . "<br>";
-    echo $time[$x];
+    echo "<u class=\"gray\">" . $time[$x] . "</u>";
     if ($commenter[$x] == $uid) {
         echo "<div class=\"right\" style=\"display: inline;\">";
         echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
         echo "<a href='editComment.php?cid=$commentID[$x]&c=$c&pid=$pid'>Edit</a>" . "&nbsp&nbsp";
-        echo "<form method=\"post\" style=\"display:inline\"><input type=\"text\" name=\"id\" value=$commentID[$x] style=\"display:none\"><input type=\"submit\" name=\"deleteComment\" value=\"Delete\" style=\"
-            background: none;
-            border: none;
-            font-size: 16px;
-            padding: 0;
-            font-family: 'Times New Roman', Times, serif;
-            color: blue;
-            cursor: pointer;
-            \"></form>" . "<br></div>";
+        echo "<form method=\"post\" style=\"display:inline\">
+        <input type=\"text\" name=\"id\" value=$commentID[$x] style=\"display:none\">
+        <input type=\"submit\" name=\"deleteComment\" value=\"Delete\">
+        </form>" . "<br></div>";
     }
     echo "</div>";
 }

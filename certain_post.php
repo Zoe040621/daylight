@@ -1,4 +1,5 @@
 <?php
+    // display info of certain post
     $sql = $conn->prepare("SELECT * FROM post WHERE postID = '$pid'");
     $sql->execute();
     $rst = $sql->fetchAll();
@@ -23,6 +24,6 @@
     $userID = array_column($rst, "userID");
     echo "<u class=\"uname\">" . $uname . " " . "</u>";
     echo $text[0] . "<br>";
-    echo $time[0];
+    echo "<u class=\"gray\">" . $time[0] . "</u>";
     echo "</div>";
 ?>

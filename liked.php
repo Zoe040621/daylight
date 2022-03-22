@@ -5,17 +5,18 @@
     session_start();
     $uid = $_SESSION['id'];
 
+    // find posts that the user liked
     $sql = $conn->prepare("SELECT postID FROM `like` WHERE userID = '$uid'");
     $sql->execute();
     $rst = $sql -> fetchAll();
     $postID = array_column($rst, "postID");
 
+    // get info of the posts the user liked + display posts (also allow them to unlike the post so it disappears on the page)
     for ($x = 0; $x <= count($postID)-1; $x++) {
         $pid = $postID[$x];
         $sql = $conn->prepare("SELECT * FROM `post` WHERE postID = '$pid'");
         $sql->execute();
         $rst = $sql->fetchAll();
-
         $photo = array_column($rst, "pic");
         $text = array_column($rst, "content");
         $time = array_column($rst, "postTime");
@@ -24,7 +25,6 @@
         $sql = $conn->prepare("SELECT * FROM `user` WHERE userID = '$postppl[0]'");
         $sql->execute();
         $rst = $sql->fetchAll();
-
         $uname = array_column($rst, "name");
 
         echo "<div>";
@@ -37,7 +37,7 @@
             <br>";
         echo "<u class='uname'>" . $uname[0] . " " . "</u>";
         echo $text[0] . "<br>";
-        echo $time[0];
+        echo "<u class=\"gray\">" . $time[0] . "</u>";
         echo "</div>";
         echo "<br>";
     }

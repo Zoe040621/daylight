@@ -1,4 +1,5 @@
 <?php
+    // edit handler for profile info
     session_start();
     $uid = $_SESSION['id'];
     $uname = $_SESSION['username'];
@@ -8,6 +9,7 @@
 
     require("conn.php");
 
+    // if doesn't upload new photo --> no change in photo
     if ($_FILES['upload']['error'] === 0) {
         $photo = file_get_contents($_FILES['upload']['tmp_name']);
         $photo = addslashes($photo);    
@@ -25,7 +27,7 @@
         $conn->exec($sql);
     }
 
+    // update email in session
     $_SESSION['email'] = $mail;
-
     header("refresh:0 ; url = myPage.php");
 ?>

@@ -14,6 +14,7 @@ $pid = $_GET['pid'];
 
 require("certain_post.php");
 
+// display people who liked the post
 echo "People who liked the post:<br><br>";
 for ($x = 0; $x <= count($userID)-1; $x++) {
     $query = $conn->prepare("SELECT * FROM `user` WHERE userID = '$userID[$x]'");

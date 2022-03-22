@@ -23,43 +23,30 @@
 <?php
     require("nav.php");
     $follow = $_GET['name'];
-
     require("conn.php");
 
     session_start();
     $uid = $_SESSION['id'];
 
+    // if said following --> get who the user is following
+    // if said follower --> get who follows the user
     if (strcmp($follow, "following") == 0) {
         $data = $conn->prepare("SELECT * FROM `following` WHERE follower = '$uid'");
         $data->execute();
-        $rst = $data -> fetchAll();
-        $following = array_column($rst, "following");
-
-        for ($x = 0; $x <= count($following)-1; $x++) {
-            $query = $conn->prepare("SELECT * FROM `user` WHERE userID = '$following[$x]'");
-            $query->execute();
-            $rst = $query -> fetch();
-            $pic = $rst["profilePic"];
-            $name = $rst["name"];
-            $id = $rst["userID"];
-            echo '<img src="data:image/jpeg;base64,'.base64_encode($pic).'" style="width:50;height:auto"/>' . "<br>";
-            echo $name . "<br>";
+        $rst = $data->fetchAll();
+        $follow = array_column($rst, "following");
+        // need for loop in both statements because the names of the remove button are different (remove following or follower)
+        for ($x = 0; $x <= count($follow) - 1; $x++) {
+            include("track_follow.php");
             echo "<form method=\"post\"><input type=\"text\" name=\"id\" value=$id style=\"display:none\"><input type=\"submit\" name=\"removeFollowing\" value=\"Remove\"></form>" . "<br>";
         }
     } else {
         $sql = $conn->prepare("SELECT * FROM `following` WHERE following = '$uid'");
         $sql->execute();
-        $rst = $sql -> fetchAll();
-        $follower = array_column($rst, "follower");
-        for ($x = 0; $x <= count($follower)-1; $x++) {
-            $query = $conn->prepare("SELECT * FROM `user` WHERE userID = '$follower[$x]'");
-            $query->execute();
-            $rst = $query -> fetch();
-            $pic = $rst["profilePic"];
-            $name = $rst["name"];
-            $id = $rst["userID"];
-            echo '<img src="data:image/jpeg;base64,'.base64_encode($pic).'" style="width:50;height:auto"/>' . "<br>";
-            echo $name . "<br>";
+        $rst = $sql->fetchAll();
+        $follow = array_column($rst, "follower");
+        for ($x = 0; $x <= count($follow) - 1; $x++) {
+            include("track_follow.php");
             echo "<form method=\"post\"><input type=\"text\" name=\"id\" value=$id style=\"display:none\"><input type=\"submit\" name=\"removeFollower\" value=\"Remove\"></form>" . "<br>";
         }
     }

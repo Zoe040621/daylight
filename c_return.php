@@ -1,4 +1,5 @@
 <?php
+    // indicate the page that the link is going
     if ($c == 0) {
         echo "
         <section class=\"nav\">

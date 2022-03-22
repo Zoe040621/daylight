@@ -12,20 +12,21 @@
 
     require("certain_post.php");
 
+    // get user info
     $sql = $conn->prepare("SELECT * FROM `user` WHERE userID = '$uid'");
     $sql->execute();
     $rst = $sql->fetchAll();
-    
     $photo = array_column($rst, "profilePic");
     $name = array_column($rst, "name");
 
+    // get comment info
     $sql = $conn->prepare("SELECT * FROM comment WHERE commentID = $cid");
     $sql->execute();
     $rst = $sql->fetchAll();
-
     $content = array_column($rst, "content");
     $content = $content[0];
 
+    // display comment info and put it in a form to submit change
     echo "<div class=\"comment\">";
     echo '<img src="data:image/jpeg;base64,' . base64_encode($photo[0]) . '" style="width:50;height:auto;float:left"/>' . "<br>";
     echo "
@@ -34,7 +35,7 @@
     <input type=\"text\" name=\"pid\" value=$pid style=\"display:none\">
     <input type=\"text\" name=\"cid\" value=$cid style=\"display:none\">
     <input type=\"text\" name=\"c\" value=$c style=\"display:none\">
-    <input type=\"text\" name=\"comment\" class=\"comment\" value=\"$content\" style=\"margin-top: 8px; width:275px\">
+    <input type=\"text\" name=\"comment\" class=\"comment\" value=\"$content\" style=\"margin-top: 8px; width:250px\">
     <input type=\"submit\" value=\"Comment\">
     </form>
     ";

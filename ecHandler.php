@@ -9,10 +9,12 @@
     $c = $_POST['c'];
     $content = $_POST['comment'];
 
+    // update comment content
     $sql = $conn->prepare("UPDATE comment SET content = '$content' WHERE commentID = '$cid'");
     if ($sql->execute()) {
         echo "Comment Updated!<br>";
     }
 
-    echo "<a href='commentHandler.php?pid=$pid&c=$c'>Go</a>";
+    echo "<br>";
+    echo "<a href='commentHandler.php?pid=$pid&c=$c'>Back</a>";
 ?>

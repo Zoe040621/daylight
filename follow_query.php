@@ -1,4 +1,5 @@
 <?php
+    // get list of following and followers involving the user
     $query = $conn->prepare("SELECT * FROM `following` WHERE following = '$uid'");
     $query->execute();
     $rst = $query->fetchAll();

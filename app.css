@@ -29,7 +29,7 @@ u.uname {
     font-weight: bold;
 }
 
-u.bio {
+u.gray {
     color: gray;
 }
 
@@ -67,4 +67,15 @@ div.profile {
     border-width: 0px 0px 2px 0px;
     border-style: solid;
     border-color: rgba(0, 0, 0, 0.185);
+}
+
+/* try to make this button look like a link */
+input[name="deleteComment"] {
+    background: none;
+    border: none;
+    font-size: 16px;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+    color: blue;
+    cursor: pointer;
 }
