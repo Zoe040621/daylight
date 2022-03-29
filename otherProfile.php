@@ -84,7 +84,6 @@
     $uname = $_GET['name'];
 
     // echo the posts of the user
-    echo "<br><br><br>Posts";
     for ($x = 0; $x <= count($pid) - 1; $x++) {
         echo "<div>";
         echo '<img src="data:image/jpeg;base64,' . base64_encode($photo[$x]) . '" style="width:400;height:auto"/>' . "<br>";
